@@ -56,7 +56,9 @@ func main() {
 		Time: time.Now(),
 	})
 
-	// 上传。URLParam 为空时 Route 为'default'
+	// 上传，URLParam 为空时 Route 为'default'
+	// Upload 第三个参数为可变参，为true时会添加'Authorization'验证，默认为false
+	
 	resp, err := c.Upload(&dataway.URLParam{}, pts, true)
 	if err != nil {
 		panic(err)
@@ -71,7 +73,8 @@ func main() {
 
 #### client 创建参数 Option
 
-- DatawayHost		dataway 地址，http://ip:port
+```
+- DatawayHost		dataway 地址，`http://ip:port`
 - AccessKey		验证公钥
 - SecretKey		验证秘钥
 - X_TraceId		trace id
@@ -79,9 +82,20 @@ func main() {
 - X_Version		版本
 - UserAgent		
 - NotGzipCompress	是否发送时进行gzip压缩，默认不压缩
+```
+#### 数据 point 格式
+
+```
+- Name		measurement名字，string
+- Tags		tags组，map[string]string
+- Fiedls	Fiedls组，map[string]interface{}
+- Time		标准库time类型，当前 point 的时间
+```
 
 #### 上传参数 URLParam
 
-- Route		上传到该路由
+```
+- Route		上传到该路由，默认为`default`
 - Token
 - Shortrp
+```
